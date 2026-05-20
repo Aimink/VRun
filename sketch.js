@@ -530,33 +530,27 @@ function mousePressed() {
 }
 function touchStarted() {
   const t = touches && touches.length ? touches[0] : { x: mouseX, y: mouseY };
-  const tx = t.x;
-  const ty = t.y;
 
-  if (isOverClearButton(tx, ty)) {
+  if (isOverMainButton(t.x, t.y)) {
+    if (!paintMode) {
+      paintMode = true;
+      document.body.classList.add("paint-mode");
+    } else {
+      openVRunExperience();
+    }
+    return false;
+  }
+
+  if (isOverClearButton(t.x, t.y)) {
     paintLayer.clear();
     return false;
   }
 
-  if (isOverMainButton(tx, ty)) {
-    if (!paintMode) {
-      paintMode = true;
-      return false;
-    }
-
-    openVRunExperience();
-   // return false;
-  }
-
-  return false;
+  return paintMode ? false : true;
 }
 
 function touchMoved() {
-  if (paintMode) {
-   // return false;
-  }
-
-  return true;
+  return paintMode ? false : true;
 }
 function keyPressed() {
   if (key === "c" || key === "C") {
