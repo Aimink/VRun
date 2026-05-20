@@ -169,6 +169,8 @@
 
   overflow: hidden;
   background: #000;
+    pointer-events: none;
+
 }
 
     #vrun-p5 {
@@ -553,6 +555,21 @@
     padding-top: 40px;
   }
 
+}
+.vrun-nav,
+.vrun-menu,
+.back,
+.back-to-top {
+
+  position: relative;
+  z-index: 50;
+
+  pointer-events: auto;
+}
+
+.vrun-hero {
+
+  touch-action: pan-y;
 }
   </style>
 </head>

@@ -551,9 +551,12 @@ function touchStarted() {
 }
 
 function touchMoved() {
-  return false;
-}
+  if (paintMode) {
+    return false;
+  }
 
+  return true;
+}
 function keyPressed() {
   if (key === "c" || key === "C") {
     paintLayer.clear();
