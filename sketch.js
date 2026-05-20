@@ -32,72 +32,60 @@ let brushA = 0;
 let brushR = 0;
 let brushActive = false;
 
-
-function getVRunContainerSize() {
-  const container = document.getElementById("vrun-p5") || document.body;
-  const rect = container.getBoundingClientRect();
-
-  return {
-    w: Math.max(320, Math.floor(rect.width || window.innerWidth)),
-    h: Math.max(320, Math.floor(rect.height || window.innerHeight))
-  };
-}
-
-function isOverMainButton(x, y) {
-  return (
-    x > buttonX - buttonW / 2 &&
-    x < buttonX + buttonW / 2 &&
-    y > buttonY - buttonH / 2 &&
-    y < buttonY + buttonH / 2
-  );
-}
-
-function isOverClearButton(x, y) {
-  return (
-    paintMode &&
-    x > clearX - clearW / 2 &&
-    x < clearX + clearW / 2 &&
-    y > clearY - clearH / 2 &&
-    y < clearY + clearH / 2
-  );
-}
-
-function openVRunExperience() {
-  window.open("https://raphaelmarczak.itch.io/vrun?password=FILWS", "_blank", "noopener");
-}
-
 function preload() {
+
   poster = loadImage("vrun.png");
+
   brush = loadImage("pinceau.png", (img) => {
     img.filter(INVERT);
   });
 }
+
 function setup() {
-  const container = document.getElementById("vrun-p5");
 
-  const w = container.clientWidth;
-  const h = container.clientHeight;
+  const container =
+    document.getElementById("vrun-p5");
 
-  let cnv = createCanvas(w, h);
+  const w =
+    container.clientWidth;
+
+  const h =
+    container.clientHeight;
+
+  let cnv =
+    createCanvas(w, h);
+
   cnv.parent("vrun-p5");
 
   rectMode(CENTER);
+
   noCursor();
-  document.body.style.overflowY = "auto";
 
   initParticles();
 
-  paintLayer = createGraphics(w, h);
+  paintLayer =
+    createGraphics(w, h);
+
   paintLayer.clear();
 
   diff = brushSize / 8;
 }
 
 function initParticles() {
+
   particles = [];
-  let count = min(120, max(50, floor((width * height) / 18000)));
+
+  let count =
+    min(
+      120,
+      max(
+        50,
+        floor((width * height) / 18000)
+      )
+    );
 
   for (let i = 0; i < count; i++) {
+
     particles.push({
       x: random(width),
       y: random(height),
@@ -112,18 +100,25 @@ function initParticles() {
 }
 
 function draw() {
+
   background(8, 10, 20);
 
   drawGradient();
+
   drawAura();
+
   drawPoster();
+
   drawTriangles();
+
   drawButton();
 
   updateBrushPainting();
+
   image(paintLayer, 0, 0);
 
   drawButtonLabel();
+
   drawHelpBox();
 
   if (isMobileLayout()) {
@@ -136,90 +131,157 @@ function draw() {
 }
 
 function isMobileLayout() {
+
   return window.innerWidth < 700;
 }
 
 function drawGradient() {
+
   noStroke();
+
   for (let y = 0; y < height; y += 3) {
-    let inter = map(y, 0, height, 0, 1);
-    let c = lerpColor(color(10, 8, 18), color(28, 24, 52), inter);
+
+    let inter =
+      map(y, 0, height, 0, 1);
+
+    let c =
+      lerpColor(
+        color(10, 8, 18),
+        color(28, 24, 52),
+        inter
+      );
+
     fill(c);
+
     rect(width / 2, y, width, 4);
   }
 }
 
 function drawAura() {
+
   let ax, ay;
 
   if (isMobileLayout()) {
+
     ax = width * 0.5;
     ay = height * 0.44;
+
   } else {
+
     ax = width * 0.30;
     ay = height * 0.5;
   }
 
   noStroke();
+
   for (let i = 7; i > 0; i--) {
-    let rr = i * (isMobileLayout() ? 90 : 120) + sin(phase + i) * 8;
+
+    let rr =
+      i * (isMobileLayout() ? 90 : 120)
+      + sin(phase + i) * 8;
+
     fill(180, 120, 255, 10);
+
     ellipse(ax, ay, rr, rr * 0.9);
   }
 }
 
 function drawPoster() {
+
   if (!poster) return;
 
   push();
+
   imageMode(CENTER);
 
-  let isMobile = isMobileLayout();
+  let isMobile =
+    isMobileLayout();
 
   let zoneX, zoneY, zoneW, zoneH;
 
   if (isMobile) {
+
     zoneX = 0;
     zoneY = 0;
+
     zoneW = width;
+
     zoneH = height * 0.70;
+
   } else {
+
     zoneX = 0;
     zoneY = 0;
+
     zoneW = width * 0.58;
+
     zoneH = height;
   }
 
-  let px = zoneX + zoneW * 0.5 + sin(frameCount * 0.01) * (isMobile ? 2 : 4);
-  let py = zoneY + zoneH * (isMobile ? 0.42 : 0.5) + cos(frameCount * 0.01) * (isMobile ? 1.5 : 3);
+  let px =
+    zoneX + zoneW * 0.5
+    + sin(frameCount * 0.01)
+    * (isMobile ? 2 : 4);
 
-  let fitScale = min(zoneW / poster.width, zoneH / poster.height);
-  let scaleFactor = isMobile ? fitScale * 0.72 : fitScale * 0.82;
+  let py =
+    zoneY + zoneH * (isMobile ? 0.42 : 0.5)
+    + cos(frameCount * 0.01)
+    * (isMobile ? 1.5 : 3);
 
-  let pw = poster.width * scaleFactor;
-  let ph = poster.height * scaleFactor;
+  let fitScale =
+    min(
+      zoneW / poster.width,
+      zoneH / poster.height
+    );
+
+  let scaleFactor =
+    isMobile
+    ? fitScale * 0.72
+    : fitScale * 0.82;
+
+  let pw =
+    poster.width * scaleFactor;
+
+  let ph =
+    poster.height * scaleFactor;
 
   noStroke();
+
   for (let i = 5; i > 0; i--) {
+
     fill(255, 120, 220, 8);
-    ellipse(px, py, pw * 0.42 + i * 36, ph * 0.42 + i * 36);
+
+    ellipse(
+      px,
+      py,
+      pw * 0.42 + i * 36,
+      ph * 0.42 + i * 36
+    );
   }
 
   drawingContext.shadowBlur = 40;
-  drawingContext.shadowColor = "rgba(180,120,255,0.22)";
+
+  drawingContext.shadowColor =
+    "rgba(180,120,255,0.22)";
+
   image(poster, px, py, pw, ph);
+
   drawingContext.shadowBlur = 0;
 
   pop();
 }
 
 function drawTriangles() {
+
   noFill();
+
   strokeWeight(1.2);
 
   for (let p of particles) {
+
     p.x += p.dx;
     p.y += p.dy;
+
     p.rot += p.drot;
 
     if (p.x < -30) p.x = width + 30;
@@ -228,8 +290,14 @@ function drawTriangles() {
     if (p.y > height + 30) p.y = -30;
 
     push();
+
     translate(p.x, p.y);
-    rotate(p.rot + sin(phase + p.x * 0.01) * 0.2);
+
+    rotate(
+      p.rot
+      + sin(phase + p.x * 0.01) * 0.2
+    );
+
     stroke(235, 240, 255, p.a);
 
     triangle(
@@ -243,17 +311,25 @@ function drawTriangles() {
 }
 
 function drawButton() {
-  let isMobile = isMobileLayout();
+
+  let isMobile =
+    isMobileLayout();
 
   let bxBtn, byBtn, bw, bh = 58;
 
   if (isMobile) {
+
     bxBtn = width * 0.5;
     byBtn = height * 0.84;
-    bw = min(width * 0.78, 320);
+
+    bw =
+      min(width * 0.78, 320);
+
   } else {
+
     bxBtn = width * 0.76;
     byBtn = height * 0.50;
+
     bw = 280;
   }
 
@@ -268,93 +344,129 @@ function drawButton() {
     mouseY > byBtn - bh / 2 &&
     mouseY < byBtn + bh / 2;
 
-  if (!isMobile && hoverButton) {
-    paintMode = true;
-  }
-
   if (paintMode) {
-    fill(255, 90, 180, hoverButton ? 90 : 45);
-    stroke(255, 120, 200, hoverButton ? 220 : 140);
+
+    fill(
+      255,
+      90,
+      180,
+      hoverButton ? 90 : 45
+    );
+
+    stroke(
+      255,
+      120,
+      200,
+      hoverButton ? 220 : 140
+    );
+
   } else if (hoverButton) {
+
     fill(255, 255, 255, 28);
+
     stroke(255, 255, 255, 170);
+
   } else {
+
     fill(255, 255, 255, 14);
+
     stroke(255, 255, 255, 90);
   }
 
   strokeWeight(1.2);
-  rect(bxBtn, byBtn, bw, bh, 12);
+
+  rect(
+    bxBtn,
+    byBtn,
+    bw,
+    bh,
+    12
+  );
 }
 
 function drawButtonLabel() {
-  let isMobile = isMobileLayout();
+
+  let isMobile =
+    isMobileLayout();
 
   push();
+
   noStroke();
+
   fill(255);
+
   textAlign(CENTER, CENTER);
+
   textSize(isMobile ? 15 : 18);
 
   drawingContext.shadowBlur = 8;
-  drawingContext.shadowColor = "rgba(0,0,0,0.45)";
+
+  drawingContext.shadowColor =
+    "rgba(0,0,0,0.45)";
 
   text(
-    paintMode ? "itch.io VRun" : "PLAY",
+    paintMode
+      ? "ENTER VRUN"
+      : "PLAY",
     buttonX,
     buttonY - 1
   );
 
   drawingContext.shadowBlur = 0;
+
   pop();
 }
 
 function drawHelpBox() {
+
   if (!paintMode) return;
 
-  let isMobile = isMobileLayout();
+  let isMobile =
+    isMobileLayout();
 
-  let hx, hy, hw, hh;
+  let hx, hy;
 
   if (isMobile) {
-    hw = min(width * 0.82, 290);
-    hh = 42;
+
     hx = width * 0.5;
     hy = height * 0.7;
+
   } else {
-    hw = 250;
-    hh = 44;
+
     hx = width * 0.76;
     hy = height * 0.61;
   }
 
   push();
 
-  
   noStroke();
+
   fill(255, 90, 180);
+
   textAlign(CENTER, CENTER);
+
   textSize(isMobile ? 13 : 15);
 
-  drawingContext.shadowBlur = 8;
-  drawingContext.shadowColor = "rgba(0,0,0,0.45)";
   text(
-    isMobile ? "PAINT WITH YOUR FINGER (use CLEAR to erase)" : "CLICK TO PAINT \n (Press C to clear)",
+    isMobile
+      ? "PAINT WITH YOUR FINGER"
+      : "CLICK TO PAINT",
     hx,
-    hy - 1
+    hy
   );
-  drawingContext.shadowBlur = 0;
 
   pop();
 }
 
 function drawClearButton() {
+
   if (!paintMode) return;
 
   clearW = 110;
   clearH = 42;
+
   clearX = width * 0.5;
-  clearY = height *0.75;//* 0.92;
+  clearY = height * 0.75;
 
   hoverClear =
     mouseX > clearX - clearW / 2 &&
@@ -365,60 +477,106 @@ function drawClearButton() {
   push();
 
   if (hoverClear) {
+
     fill(255, 255, 255, 26);
+
     stroke(255, 255, 255, 150);
+
   } else {
+
     fill(255, 255, 255, 12);
+
     stroke(255, 255, 255, 90);
   }
 
   strokeWeight(1.1);
-  rect(clearX, clearY, clearW, clearH, 12);
+
+  rect(
+    clearX,
+    clearY,
+    clearW,
+    clearH,
+    12
+  );
 
   noStroke();
+
   fill(255);
+
   textAlign(CENTER, CENTER);
+
   textSize(14);
-  text("CLEAR", clearX, clearY - 1);
+
+  text(
+    "CLEAR",
+    clearX,
+    clearY - 1
+  );
 
   pop();
 }
 
 function resetBrushStroke() {
+
   brushAX = 0;
   brushAY = 0;
+
   brushA = 0;
+
   brushR = brushSize;
+
   brushActive = false;
 }
 
-
 function updateBrushPainting() {
+
   if (!paintMode) {
+
     resetBrushStroke();
+
     return;
   }
 
-  let isDrawingNow = isMobileLayout() ? touches.length > 0 : mouseIsPressed;
+  let isDrawingNow =
+    isMobileLayout()
+    ? touches.length > 0
+    : mouseIsPressed;
 
   if (!isDrawingNow) {
+
     resetBrushStroke();
+
     return;
   }
 
-  let targetX = constrain(mouseX, 0, width);
-  let targetY = constrain(mouseY, 0, height);
+  let targetX =
+    constrain(mouseX, 0, width);
 
-  let moved = dist(mouseX, mouseY, pmouseX, pmouseY) > 0.5;
+  let targetY =
+    constrain(mouseY, 0, height);
+
+  let moved =
+    dist(
+      mouseX,
+      mouseY,
+      pmouseX,
+      pmouseY
+    ) > 0.5;
 
   if (!brushActive) {
+
     brushActive = true;
+
     brushX = targetX;
     brushY = targetY;
+
     brushAX = 0;
     brushAY = 0;
+
     brushA = 0;
+
     brushR = brushSize;
+
     return;
   }
 
@@ -426,43 +584,72 @@ function updateBrushPainting() {
 
   let oldR = brushR;
 
-  brushAX += (targetX - brushX) * spring;
-  brushAY += (targetY - brushY) * spring;
+  brushAX +=
+    (targetX - brushX)
+    * spring;
+
+  brushAY +=
+    (targetY - brushY)
+    * spring;
 
   brushAX *= friction;
   brushAY *= friction;
 
-  brushA += sqrt(brushAX * brushAX + brushAY * brushAY) - brushA;
+  brushA +=
+    sqrt(
+      brushAX * brushAX
+      + brushAY * brushAY
+    ) - brushA;
+
   brushA *= 0.6;
 
   brushR = brushSize - brushA;
+
   if (brushR < 1) brushR = 1;
 
-  paintLayer.stroke(255, 255, 255, 70);
+  paintLayer.stroke(
+    255,
+    255,
+    255,
+    70
+  );
+
   paintLayer.noFill();
 
   let distanceSteps = 8;
 
   for (let i = 0; i < distanceSteps; i++) {
+
     let oldX = brushX;
     let oldY = brushY;
 
     brushX += brushAX / distanceSteps;
     brushY += brushAY / distanceSteps;
 
-    oldR += (brushR - oldR) / distanceSteps;
+    oldR +=
+      (brushR - oldR)
+      / distanceSteps;
+
     if (oldR < 1) oldR = 1;
 
     paintLayer.strokeWeight(oldR + diff);
-    paintLayer.line(brushX, brushY, oldX, oldY);
+
+    paintLayer.line(
+      brushX,
+      brushY,
+      oldX,
+      oldY
+    );
 
     paintLayer.strokeWeight(oldR);
+
     paintLayer.line(
       brushX + diff * 2,
       brushY + diff * 2,
       oldX + diff * 2,
       oldY + diff * 2
     );
+
     paintLayer.line(
       brushX - diff,
       brushY - diff,
@@ -471,111 +658,194 @@ function updateBrushPainting() {
     );
   }
 }
+
 function drawCursor() {
+
   if (isMobileLayout()) return;
 
   push();
+
   imageMode(CENTER);
 
   if (paintMode && brush) {
+
     drawingContext.shadowBlur = 12;
-    drawingContext.shadowColor = "rgba(255,120,200,0.55)";
+
+    drawingContext.shadowColor =
+      "rgba(255,120,200,0.55)";
 
     translate(mouseX, mouseY);
-    rotate(-0.6 + sin(frameCount * 0.05) * 0.08);
+
+    rotate(
+      -0.6
+      + sin(frameCount * 0.05) * 0.08
+    );
 
     let s = 38;
-    image(brush, 0, 0, s, s);
+
+    image(
+      brush,
+      0,
+      0,
+      s,
+      s
+    );
 
     drawingContext.shadowBlur = 0;
+
   } else {
+
     translate(mouseX, mouseY);
 
     stroke(255, 255, 255, 190);
+
     strokeWeight(1.2);
+
     noFill();
 
-    let r1 = 18 + sin(frameCount * 0.08) * 1.5;
-    let r2 = 30 + sin(frameCount * 0.06) * 2;
+    let r1 =
+      18
+      + sin(frameCount * 0.08) * 1.5;
+
+    let r2 =
+      30
+      + sin(frameCount * 0.06) * 2;
 
     ellipse(0, 0, r1, r1);
+
     ellipse(0, 0, r2, r2);
 
     line(-10, 0, 10, 0);
+
     line(0, -10, 0, 10);
 
     fill(255, 255, 255, 180);
+
     noStroke();
+
     ellipse(0, 0, 3, 3);
   }
 
   pop();
 }
+
 function mousePressed() {
-  let overMainButton =
+
+  if (
     mouseX > buttonX - buttonW / 2 &&
     mouseX < buttonX + buttonW / 2 &&
     mouseY > buttonY - buttonH / 2 &&
-    mouseY < buttonY + buttonH / 2;
+    mouseY < buttonY + buttonH / 2
+  ) {
 
-  if (overMainButton) {
     if (!paintMode) {
+
       paintMode = true;
+
     } else {
-      window.open("https://raphaelmarczak.itch.io/vrun?password=FILWS", "_blank");
+
+      window.open(
+        "https://raphaelmarczak.itch.io/vrun?password=FILWS",
+        "_blank"
+      );
     }
 
     return false;
   }
 }
-function touchStarted() {
-  const t = touches && touches.length ? touches[0] : { x: mouseX, y: mouseY };
 
-  if (isOverMainButton(t.x, t.y)) {
+function touchStarted() {
+
+  const t =
+    touches && touches.length
+    ? touches[0]
+    : {
+        x: mouseX,
+        y: mouseY
+      };
+
+  if (
+    isOverMainButton(t.x, t.y)
+  ) {
+
     if (!paintMode) {
+
       paintMode = true;
-      document.body.classList.add("paint-mode");
+
+      document.body.classList.add(
+        "paint-mode"
+      );
+
     } else {
+
       openVRunExperience();
     }
+
     return false;
   }
 
-  if (isOverClearButton(t.x, t.y)) {
+  if (
+    isOverClearButton(t.x, t.y)
+  ) {
+
     paintLayer.clear();
+
     return false;
   }
 
-  return paintMode ? false : true;
+  return paintMode
+    ? false
+    : true;
 }
 
 function touchMoved() {
-  return paintMode ? false : true;
+
+  return paintMode
+    ? false
+    : true;
 }
+
 function keyPressed() {
-  if (key === "c" || key === "C") {
+
+  if (
+    key === "c"
+    || key === "C"
+  ) {
+
     paintLayer.clear();
   }
 
   if (keyCode === ESCAPE) {
+
     paintMode = false;
+
     brushAX = 0;
     brushAY = 0;
+
     brushActive = false;
   }
 }
+
 function mouseReleased() {
+
   resetBrushStroke();
 }
 
 function touchEnded() {
+
   resetBrushStroke();
-  return false;
+
+  return paintMode
+    ? false
+    : true;
 }
+
 function windowResized() {
 
   const container =
-    document.getElementById("vrun-p5");
+    document.getElementById(
+      "vrun-p5"
+    );
 
   const w =
     container.offsetWidth;
@@ -591,4 +861,34 @@ function windowResized() {
   paintLayer.clear();
 
   initParticles();
+}
+
+function isOverMainButton(x, y) {
+
+  return (
+    x > buttonX - buttonW / 2 &&
+    x < buttonX + buttonW / 2 &&
+    y > buttonY - buttonH / 2 &&
+    y < buttonY + buttonH / 2
+  );
+}
+
+function isOverClearButton(x, y) {
+
+  return (
+    paintMode &&
+    x > clearX - clearW / 2 &&
+    x < clearX + clearW / 2 &&
+    y > clearY - clearH / 2 &&
+    y < clearY + clearH / 2
+  );
+}
+
+function openVRunExperience() {
+
+  window.open(
+    "https://raphaelmarczak.itch.io/vrun?password=FILWS",
+    "_blank",
+    "noopener"
+  );
 }
