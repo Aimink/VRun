@@ -91,16 +91,13 @@
 
     .vrun-menu a:hover { color: #ff4fd2; }
 
-    .vrun-hero {
-      min-height: 76vh;
-      display: grid;
-      grid-template-columns: minmax(320px, 0.78fr) minmax(700px, 1.22fr);
-      gap: 54px;
-      align-items: stretch;
-      padding: 90px 42px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      overflow: hidden;
-    }
+  .vrun-hero {
+  position: relative;
+  min-height: 76vh;
+  padding: 90px 42px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  overflow: hidden;
+}
 
     .vrun-intro {
       max-width: 620px;
@@ -137,19 +134,42 @@
       line-height: 2;
       font-size: 1rem;
     }
+.vrun-intro {
 
-    .vrun-hero-right {
-      position: relative;
-      width: 100%;
-      min-height: 760px;
-      overflow: hidden;
-      border-radius: 30px;
-      background: #000;
-      border: 1px solid rgba(255,255,255,0.10);
-      box-shadow:
-        0 0 90px rgba(120,80,255,0.25),
-        0 0 160px rgba(255,79,210,0.12);
-    }
+  position: absolute;
+
+  top: 50%;
+  right: 7%;
+
+  transform: translateY(-50%);
+
+  z-index: 3;
+
+  width: 420px;
+
+  text-align: left;
+
+  pointer-events: none;
+}
+.vrun-title,
+.vrun-description,
+.vrun-kicker {
+
+  max-width: 420px;
+}
+
+.vrun-intro a,
+.vrun-intro button {
+  pointer-events: auto;
+}
+   .vrun-hero-right {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  overflow: hidden;
+  background: #000;
+}
 
     #vrun-p5 {
       position: absolute;
@@ -517,6 +537,23 @@
         min-height: 360px;
       }
     }
+    @media (max-width: 900px) {
+
+  .vrun-intro {
+
+    position: relative;
+
+    top: auto;
+    right: auto;
+
+    transform: none;
+
+    width: 100%;
+
+    padding-top: 40px;
+  }
+
+}
   </style>
 </head>
 
@@ -538,7 +575,17 @@
         </div>
       </nav>
 
+      
+     
       <section class="vrun-hero" id="project">
+
+      <div class="vrun-hero-right">
+          <div id="vrun-p5"> <script src="https://cdn.jsdelivr.net/npm/p5@1.11.13/lib/p5.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.13/lib/addons/p5.sound.min.js"></script>
+
+          <script src="sketch.js"></script>
+</div>
+        </div>
         <div class="vrun-intro">
           <p class="vrun-kicker">Immersive Design</p>
 
@@ -550,11 +597,8 @@
             collective digital environments.
           </p>
         </div>
-          <script src="sketch.js"></script>
-
-        <div class="vrun-hero-right">
-          <div id="vrun-p5"></div>
-        </div>
+  
+  
       </section>
 
       <section class="vrun-about" id="about">
@@ -715,8 +759,6 @@
 
   <a href="#top" class="back-to-top">↑</a>
 
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.13/lib/p5.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.13/lib/addons/p5.sound.min.js"></script>
-
+  
 </body>
 </html>

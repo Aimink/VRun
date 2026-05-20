@@ -299,7 +299,7 @@ function drawButtonLabel() {
   drawingContext.shadowColor = "rgba(0,0,0,0.45)";
 
   text(
-    paintMode ? "ENTER VRun" : "PLAY",
+    paintMode ? "itch.io VRun" : "PLAY",
     buttonX,
     buttonY - 1
   );
