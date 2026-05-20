@@ -83,6 +83,7 @@ function setup() {
 
   rectMode(CENTER);
   noCursor();
+  document.body.style.overflowY = "auto";
 
   initParticles();
 
@@ -544,7 +545,7 @@ function touchStarted() {
     }
 
     openVRunExperience();
-    return false;
+   // return false;
   }
 
   return false;
@@ -552,7 +553,7 @@ function touchStarted() {
 
 function touchMoved() {
   if (paintMode) {
-    return false;
+   // return false;
   }
 
   return true;
