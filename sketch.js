@@ -20,8 +20,8 @@ let clearH = 0;
 
 let exitX = 0;
 let exitY = 0;
-let exitW = 120;
-let exitH = 44;
+let exitW = 92;
+let exitH = 36;
 
 let paintLayer;
 
@@ -147,8 +147,13 @@ function drawPoster() {
   let zoneW = isMobile ? width : width * 0.58;
   let zoneH = isMobile ? height * 0.68 : height;
 
-  let px = zoneW * 0.5 + sin(frameCount * 0.01) * (isMobile ? 2 : 4);
-  let py = zoneH * (isMobile ? 0.42 : 0.5) + cos(frameCount * 0.01) * (isMobile ? 1.5 : 3);
+  let px =
+    zoneW * 0.5 +
+    sin(frameCount * 0.01) * (isMobile ? 2 : 4);
+
+  let py =
+    zoneH * (isMobile ? 0.42 : 0.5) +
+    cos(frameCount * 0.01) * (isMobile ? 1.5 : 3);
 
   let fitScale = min(zoneW / poster.width, zoneH / poster.height);
   let scaleFactor = isMobile ? fitScale * 0.72 : fitScale * 0.82;
@@ -204,20 +209,26 @@ function drawTriangles() {
 function drawButton() {
   let isMobile = isMobileLayout();
 
-  buttonW = isMobile ? min(width * 0.78, 320) : 280;
-  buttonH = 58;
-
-  buttonX = isMobile ? width * 0.5 : width * 0.76;
-  buttonY = isMobile ? height * 0.84 : height * 0.5;
+  if (isMobile) {
+    buttonW = width * 0.40;
+    buttonH = 54;
+    buttonX = width * 0.70;
+    buttonY = height * 0.84;
+  } else {
+    buttonW = 280;
+    buttonH = 58;
+    buttonX = width * 0.76;
+    buttonY = height * 0.5;
+  }
 
   hoverButton = isOverMainButton(mouseX, mouseY);
 
-  if (paintMode) {
-    fill(255, 90, 180, hoverButton ? 90 : 45);
-    stroke(255, 120, 200, hoverButton ? 220 : 140);
-  } else if (hoverButton) {
-    fill(255, 255, 255, 28);
-    stroke(255, 255, 255, 170);
+  if (hoverButton) {
+    fill(255, 90, 180, 90);
+    stroke(255, 120, 200, 220);
+  } else if (paintMode) {
+    fill(255, 90, 180, 55);
+    stroke(255, 120, 200, 160);
   } else {
     fill(255, 255, 255, 14);
     stroke(255, 255, 255, 90);
@@ -233,12 +244,12 @@ function drawButtonLabel() {
   noStroke();
   fill(255);
   textAlign(CENTER, CENTER);
-  textSize(isMobileLayout() ? 15 : 18);
+  textSize(isMobileLayout() ? 14 : 18);
 
   drawingContext.shadowBlur = 8;
   drawingContext.shadowColor = "rgba(0,0,0,0.45)";
 
-  text(paintMode ? "ENTER VRUN" : "PLAY", buttonX, buttonY - 1);
+  text(paintMode ? "ITCH.IO VRUN" : "PLAY", buttonX, buttonY - 1);
 
   drawingContext.shadowBlur = 0;
 
@@ -270,30 +281,36 @@ function drawHelpBox() {
 function drawClearButton() {
   if (!paintMode) return;
 
-  clearW = 120;
-  clearH = 44;
-  clearX = width * 0.5;
-  clearY = height * 0.74;
+  clearW = 92;
+  clearH = 36;
+
+  if (isMobileLayout()) {
+    clearX = width * 0.24;
+    clearY = height * 0.79;
+  } else {
+    clearX = width * 0.76;
+    clearY = height * 0.76;
+  }
 
   hoverClear = isOverClearButton(mouseX, mouseY);
 
   push();
 
   if (hoverClear) {
-    fill(255, 255, 255, 26);
-    stroke(255, 255, 255, 150);
+    fill(80, 180, 255, 40);
+    stroke(120, 220, 255, 220);
   } else {
-    fill(255, 255, 255, 12);
-    stroke(255, 255, 255, 90);
+    fill(255, 255, 255, 10);
+    stroke(255, 255, 255, 80);
   }
 
-  strokeWeight(1.1);
-  rect(clearX, clearY, clearW, clearH, 12);
+  strokeWeight(1);
+  rect(clearX, clearY, clearW, clearH, 10);
 
   noStroke();
   fill(255);
   textAlign(CENTER, CENTER);
-  textSize(14);
+  textSize(13);
   text("CLEAR", clearX, clearY - 1);
 
   pop();
@@ -302,30 +319,36 @@ function drawClearButton() {
 function drawExitButton() {
   if (!paintMode) return;
 
-  exitW = 120;
-  exitH = 44;
-  exitX = isMobileLayout() ? width * 0.5 : width * 0.76;
-  exitY = isMobileLayout() ? height * 0.94 : height * 0.7;
+  exitW = 92;
+  exitH = 36;
+
+  if (isMobileLayout()) {
+    exitX = width * 0.24;
+    exitY = height * 0.88;
+  } else {
+    exitX = width * 0.76;
+    exitY = height * 0.7;
+  }
 
   hoverExit = isOverExitButton(mouseX, mouseY);
 
   push();
 
   if (hoverExit) {
-    fill(255, 255, 255, 26);
-    stroke(255, 255, 255, 150);
+    fill(255, 90, 120, 40);
+    stroke(255, 120, 150, 220);
   } else {
-    fill(255, 255, 255, 12);
-    stroke(255, 255, 255, 90);
+    fill(255, 255, 255, 10);
+    stroke(255, 255, 255, 80);
   }
 
-  strokeWeight(1.1);
-  rect(exitX, exitY, exitW, exitH, 12);
+  strokeWeight(1);
+  rect(exitX, exitY, exitW, exitH, 10);
 
   noStroke();
   fill(255);
   textAlign(CENTER, CENTER);
-  textSize(14);
+  textSize(13);
   text("EXIT", exitX, exitY - 1);
 
   pop();
