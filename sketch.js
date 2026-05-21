@@ -257,23 +257,53 @@ function drawButtonLabel() {
 }
 
 function drawHelpBox() {
+
   if (!paintMode) return;
 
-  let hx = isMobileLayout() ? width * 0.5 : width * 0.76;
-  let hy = isMobileLayout() ? height * 0.66 : height * 0.61;
+  let hx;
+  let hy;
+
+  if (isMobileLayout()) {
+
+    hx = width * 0.5;
+    hy = height * 0.66;
+
+  } else {
+
+    hx = width * 0.76;
+    hy = height * 0.6;
+  }
 
   push();
 
   noStroke();
-  fill(255, 90, 180);
-  textAlign(CENTER, CENTER);
-  textSize(isMobileLayout() ? 13 : 15);
 
-  text(
-    isMobileLayout() ? "PAINT WITH YOUR FINGER" : "CLICK TO PAINT",
-    hx,
-    hy
+  fill(255, 90, 180);
+
+  textAlign(CENTER, CENTER);
+
+  textSize(
+    isMobileLayout()
+      ? 13
+      : 15
   );
+
+  if (isMobileLayout()) {
+
+    text(
+      "PAINT WITH YOUR FINGER",
+      hx,
+      hy
+    );
+
+  } else {
+
+    text(
+      "CLICK TO PAINT\n(Press C to clear)",
+      hx,
+      hy
+    );
+  }
 
   pop();
 }
@@ -317,7 +347,9 @@ function drawClearButton() {
 }
 
 function drawExitButton() {
-  if (!paintMode) return;
+
+
+  if (!paintMode || !isMobileLayout()) return;
 
   exitW = 92;
   exitH = 36;
@@ -605,6 +637,9 @@ function isOverClearButton(x, y) {
 }
 
 function isOverExitButton(x, y) {
+
+    if (!isMobileLayout()) return false;
+
   return (
     paintMode &&
     x > exitX - exitW / 2 &&
