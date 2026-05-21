@@ -20,8 +20,8 @@ let clearH = 0;
 
 let exitX = 0;
 let exitY = 0;
-let exitW = 110;
-let exitH = 42;
+let exitW = 120;
+let exitH = 44;
 
 let paintLayer;
 
@@ -40,14 +40,11 @@ let brushActive = false;
 
 function preload() {
   poster = loadImage("vrun.png");
-  brush = loadImage("pinceau.png", (img) => {
-    img.filter(INVERT);
-  });
+  brush = loadImage("pinceau.png", img => img.filter(INVERT));
 }
 
 function setup() {
   const container = document.getElementById("vrun-p5");
-
   const w = container.clientWidth;
   const h = container.clientHeight;
 
@@ -65,9 +62,12 @@ function setup() {
   diff = brushSize / 8;
 }
 
+function isMobileLayout() {
+  return window.innerWidth < 700;
+}
+
 function initParticles() {
   particles = [];
-
   let count = min(120, max(50, floor((width * height) / 18000)));
 
   for (let i = 0; i < count; i++) {
@@ -91,6 +91,7 @@ function draw() {
   drawAura();
   drawPoster();
   drawTriangles();
+
   drawButton();
 
   updateBrushPainting();
@@ -109,10 +110,6 @@ function draw() {
   phase += 0.01;
 }
 
-function isMobileLayout() {
-  return window.innerWidth < 700;
-}
-
 function drawGradient() {
   noStroke();
 
@@ -126,16 +123,8 @@ function drawGradient() {
 }
 
 function drawAura() {
-  let ax;
-  let ay;
-
-  if (isMobileLayout()) {
-    ax = width * 0.5;
-    ay = height * 0.44;
-  } else {
-    ax = width * 0.30;
-    ay = height * 0.5;
-  }
+  let ax = isMobileLayout() ? width * 0.5 : width * 0.3;
+  let ay = isMobileLayout() ? height * 0.44 : height * 0.5;
 
   noStroke();
 
@@ -155,32 +144,11 @@ function drawPoster() {
 
   let isMobile = isMobileLayout();
 
-  let zoneX;
-  let zoneY;
-  let zoneW;
-  let zoneH;
+  let zoneW = isMobile ? width : width * 0.58;
+  let zoneH = isMobile ? height * 0.68 : height;
 
-  if (isMobile) {
-    zoneX = 0;
-    zoneY = 0;
-    zoneW = width;
-    zoneH = height * 0.70;
-  } else {
-    zoneX = 0;
-    zoneY = 0;
-    zoneW = width * 0.58;
-    zoneH = height;
-  }
-
-  let px =
-    zoneX +
-    zoneW * 0.5 +
-    sin(frameCount * 0.01) * (isMobile ? 2 : 4);
-
-  let py =
-    zoneY +
-    zoneH * (isMobile ? 0.42 : 0.5) +
-    cos(frameCount * 0.01) * (isMobile ? 1.5 : 3);
+  let px = zoneW * 0.5 + sin(frameCount * 0.01) * (isMobile ? 2 : 4);
+  let py = zoneH * (isMobile ? 0.42 : 0.5) + cos(frameCount * 0.01) * (isMobile ? 1.5 : 3);
 
   let fitScale = min(zoneW / poster.width, zoneH / poster.height);
   let scaleFactor = isMobile ? fitScale * 0.72 : fitScale * 0.82;
@@ -197,9 +165,7 @@ function drawPoster() {
 
   drawingContext.shadowBlur = 40;
   drawingContext.shadowColor = "rgba(180,120,255,0.22)";
-
   image(poster, px, py, pw, ph);
-
   drawingContext.shadowBlur = 0;
 
   pop();
@@ -220,7 +186,6 @@ function drawTriangles() {
     if (p.y > height + 30) p.y = -30;
 
     push();
-
     translate(p.x, p.y);
     rotate(p.rot + sin(phase + p.x * 0.01) * 0.2);
 
@@ -239,25 +204,11 @@ function drawTriangles() {
 function drawButton() {
   let isMobile = isMobileLayout();
 
-  let bxBtn;
-  let byBtn;
-  let bw;
-  let bh = 58;
+  buttonW = isMobile ? min(width * 0.78, 320) : 280;
+  buttonH = 58;
 
-  if (isMobile) {
-    bxBtn = width * 0.5;
-    byBtn = height * 0.84;
-    bw = min(width * 0.78, 320);
-  } else {
-    bxBtn = width * 0.76;
-    byBtn = height * 0.50;
-    bw = 280;
-  }
-
-  buttonX = bxBtn;
-  buttonY = byBtn;
-  buttonW = bw;
-  buttonH = bh;
+  buttonX = isMobile ? width * 0.5 : width * 0.76;
+  buttonY = isMobile ? height * 0.84 : height * 0.5;
 
   hoverButton = isOverMainButton(mouseX, mouseY);
 
@@ -273,18 +224,16 @@ function drawButton() {
   }
 
   strokeWeight(1.2);
-  rect(bxBtn, byBtn, bw, bh, 12);
+  rect(buttonX, buttonY, buttonW, buttonH, 12);
 }
 
 function drawButtonLabel() {
-  let isMobile = isMobileLayout();
-
   push();
 
   noStroke();
   fill(255);
   textAlign(CENTER, CENTER);
-  textSize(isMobile ? 15 : 18);
+  textSize(isMobileLayout() ? 15 : 18);
 
   drawingContext.shadowBlur = 8;
   drawingContext.shadowColor = "rgba(0,0,0,0.45)";
@@ -299,28 +248,18 @@ function drawButtonLabel() {
 function drawHelpBox() {
   if (!paintMode) return;
 
-  let isMobile = isMobileLayout();
-
-  let hx;
-  let hy;
-
-  if (isMobile) {
-    hx = width * 0.5;
-    hy = height * 0.66;
-  } else {
-    hx = width * 0.76;
-    hy = height * 0.61;
-  }
+  let hx = isMobileLayout() ? width * 0.5 : width * 0.76;
+  let hy = isMobileLayout() ? height * 0.66 : height * 0.61;
 
   push();
 
   noStroke();
   fill(255, 90, 180);
   textAlign(CENTER, CENTER);
-  textSize(isMobile ? 13 : 15);
+  textSize(isMobileLayout() ? 13 : 15);
 
   text(
-    isMobile ? "PAINT WITH YOUR FINGER" : "CLICK TO PAINT",
+    isMobileLayout() ? "PAINT WITH YOUR FINGER" : "CLICK TO PAINT",
     hx,
     hy
   );
@@ -331,10 +270,10 @@ function drawHelpBox() {
 function drawClearButton() {
   if (!paintMode) return;
 
-  clearW = 110;
-  clearH = 42;
+  clearW = 120;
+  clearH = 44;
   clearX = width * 0.5;
-  clearY = height * 0.75;
+  clearY = height * 0.74;
 
   hoverClear = isOverClearButton(mouseX, mouseY);
 
@@ -363,16 +302,10 @@ function drawClearButton() {
 function drawExitButton() {
   if (!paintMode) return;
 
-  exitW = 110;
-  exitH = 42;
-
-  if (isMobileLayout()) {
-    exitX = width * 0.5;
-    exitY = height * 0.92;
-  } else {
-    exitX = width * 0.76;
-    exitY = height * 0.70;
-  }
+  exitW = 120;
+  exitH = 44;
+  exitX = isMobileLayout() ? width * 0.5 : width * 0.76;
+  exitY = isMobileLayout() ? height * 0.94 : height * 0.7;
 
   hoverExit = isOverExitButton(mouseX, mouseY);
 
@@ -412,9 +345,7 @@ function updateBrushPainting() {
     return;
   }
 
-  let isDrawingNow = isMobileLayout()
-    ? touches.length > 0
-    : mouseIsPressed;
+  let isDrawingNow = isMobileLayout() ? touches.length > 0 : mouseIsPressed;
 
   if (
     isOverMainButton(mouseX, mouseY) ||
@@ -502,7 +433,6 @@ function drawCursor() {
   if (isMobileLayout()) return;
 
   push();
-
   imageMode(CENTER);
 
   if (paintMode && brush) {
@@ -512,8 +442,7 @@ function drawCursor() {
     translate(mouseX, mouseY);
     rotate(-0.6 + sin(frameCount * 0.05) * 0.08);
 
-    let s = 38;
-    image(brush, 0, 0, s, s);
+    image(brush, 0, 0, 38, 38);
 
     drawingContext.shadowBlur = 0;
   } else {
@@ -560,9 +489,7 @@ function mousePressed() {
 }
 
 function touchStarted() {
-  const t = touches && touches.length
-    ? touches[0]
-    : { x: mouseX, y: mouseY };
+  const t = touches && touches.length ? touches[0] : { x: mouseX, y: mouseY };
 
   if (isOverExitButton(t.x, t.y)) {
     exitPaintMode();
