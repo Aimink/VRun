@@ -327,7 +327,7 @@ function drawClearButton() {
   clearW = 92;
   clearH = 36;
 
-  if (isMobileLayout()) {
+  if (isMobileLayout() || isTabletDevice()) {
     clearX = width * 0.24;
     clearY = height * 0.79;
   } else {
@@ -364,7 +364,7 @@ function drawExitButton() {
   exitW = 92;
   exitH = 36;
 
-  if (isMobileLayout()) {
+  if (isMobileLayout() || isTabletDevice()) {
     exitX = width * 0.24;
     exitY = height * 0.88;
   } else {
