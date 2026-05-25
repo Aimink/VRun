@@ -100,7 +100,7 @@ function draw() {
   drawButtonLabel();
   drawHelpBox();
 
-  if (isMobileLayout()) {
+  if (shouldShowTouchControls()) {
     drawClearButton();
   }
 
@@ -261,6 +261,20 @@ function isTouchDevice() {
     navigator.maxTouchPoints > 0
   );
 }
+
+function isTabletDevice() {
+  const ua = navigator.userAgent || "";
+  const isIpadOS = /Macintosh/.test(ua) && navigator.maxTouchPoints > 1;
+  return (
+    /iPad|Android(?!.*Mobile)|Tablet|PlayBook|Silk|Kindle/.test(ua) ||
+    isIpadOS
+  );
+}
+
+function shouldShowTouchControls() {
+  return isMobileLayout() || isTabletDevice();
+}
+
 function drawHelpBox() {
 
   if (!paintMode) return;
@@ -268,13 +282,10 @@ function drawHelpBox() {
   let hx;
   let hy;
 
-  if (isMobileLayout()) {
-
+  if (shouldShowTouchControls()) {
     hx = width * 0.5;
     hy = height * 0.66;
-
   } else {
-
     hx = width * 0.76;
     hy = height * 0.6;
   }
@@ -288,21 +299,18 @@ function drawHelpBox() {
   textAlign(CENTER, CENTER);
 
   textSize(
-    isMobileLayout()
+    shouldShowTouchControls()
       ? 13
       : 15
   );
 
-  if (isMobileLayout()) {
-
+  if (shouldShowTouchControls()) {
     text(
       "PAINT WITH YOUR FINGER",
       hx,
       hy
     );
-
   } else {
-
     text(
       "CLICK TO PAINT\n(Press C to clear)",
       hx,
@@ -314,7 +322,7 @@ function drawHelpBox() {
 }
 
 function drawClearButton() {
-  if (!paintMode) return;
+  if (!paintMode || !shouldShowTouchControls()) return;
 
   clearW = 92;
   clearH = 36;
@@ -352,7 +360,7 @@ function drawClearButton() {
 }
 
 function drawExitButton() {
-  if (!paintMode || !isMobileLayout()) return;
+  if (!paintMode || !shouldShowTouchControls()) return;
   exitW = 92;
   exitH = 36;
 
@@ -402,7 +410,7 @@ function updateBrushPainting() {
     return;
   }
 
-  let isDrawingNow = isMobileLayout() ? touches.length > 0 : mouseIsPressed;
+  let isDrawingNow = shouldShowTouchControls() ? touches.length > 0 : mouseIsPressed;
 
   if (
     isOverMainButton(mouseX, mouseY) ||
@@ -629,7 +637,7 @@ function isOverMainButton(x, y) {
 }
 
 function isOverClearButton(x, y) {
-  if (!isMobileLayout()) return false;
+  if (!shouldShowTouchControls()) return false;
   return (
     paintMode &&
     x > clearX - clearW / 2 &&
@@ -640,7 +648,7 @@ function isOverClearButton(x, y) {
 }
 
 function isOverExitButton(x, y) {
-  if (!isMobileLayout()) return false;
+  if (!shouldShowTouchControls()) return false;
   return (
     paintMode &&
     x > exitX - exitW / 2 &&
