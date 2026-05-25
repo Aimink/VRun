@@ -282,7 +282,10 @@ function drawHelpBox() {
   let hx;
   let hy;
 
-  if (shouldShowTouchControls()) {
+  if (isTabletDevice()) {
+    hx = buttonX;
+    hy = buttonY + buttonH * 1.2;
+  } else if (isMobileLayout()) {
     hx = width * 0.5;
     hy = height * 0.66;
   } else {
@@ -304,7 +307,7 @@ function drawHelpBox() {
       : 15
   );
 
-  if (shouldShowTouchControls()) {
+  if (isTabletDevice() || isMobileLayout()) {
     text(
       "PAINT WITH YOUR FINGER",
       hx,
@@ -327,7 +330,10 @@ function drawClearButton() {
   clearW = 92;
   clearH = 36;
 
-  if (isMobileLayout() || isTabletDevice()) {
+  if (isTabletDevice()) {
+    clearX = buttonX;
+    clearY = buttonY + buttonH * 1.8;
+  } else if (isMobileLayout()) {
     clearX = width * 0.24;
     clearY = height * 0.79;
   } else {
@@ -364,7 +370,10 @@ function drawExitButton() {
   exitW = 92;
   exitH = 36;
 
-  if (isMobileLayout() || isTabletDevice()) {
+  if (isTabletDevice()) {
+    exitX = buttonX;
+    exitY = buttonY + buttonH * 2.6;
+  } else if (isMobileLayout()) {
     exitX = width * 0.24;
     exitY = height * 0.88;
   } else {
