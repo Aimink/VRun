@@ -284,7 +284,7 @@ function drawHelpBox() {
 
   if (isTabletDevice()) {
     hx = buttonX;
-    hy = buttonY + buttonH * 1.2;
+    hy = buttonY + buttonH * 1.1;
   } else if (isMobileLayout()) {
     hx = width * 0.5;
     hy = height * 0.66;
@@ -332,7 +332,7 @@ function drawClearButton() {
 
   if (isTabletDevice()) {
     clearX = buttonX;
-    clearY = buttonY + buttonH * 1.8;
+    clearY = buttonY + buttonH * 1.9;
   } else if (isMobileLayout()) {
     clearX = width * 0.24;
     clearY = height * 0.79;
@@ -372,7 +372,7 @@ function drawExitButton() {
 
   if (isTabletDevice()) {
     exitX = buttonX;
-    exitY = buttonY + buttonH * 2.6;
+    exitY = buttonY + buttonH * 3.2;
   } else if (isMobileLayout()) {
     exitX = width * 0.24;
     exitY = height * 0.88;
