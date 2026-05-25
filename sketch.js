@@ -255,7 +255,12 @@ function drawButtonLabel() {
 
   pop();
 }
-
+function isTouchDevice() {
+  return (
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0
+  );
+}
 function drawHelpBox() {
 
   if (!paintMode) return;
@@ -349,8 +354,7 @@ function drawClearButton() {
 function drawExitButton() {
 
 
-  if (!paintMode || !isMobileLayout()) return;
-
+if (!paintMode || !isTouchDevice()) return;
   exitW = 92;
   exitH = 36;
 
@@ -638,8 +642,7 @@ function isOverClearButton(x, y) {
 
 function isOverExitButton(x, y) {
 
-    if (!isMobileLayout()) return false;
-
+if (!isTouchDevice()) return false;
   return (
     paintMode &&
     x > exitX - exitW / 2 &&
