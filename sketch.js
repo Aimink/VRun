@@ -100,7 +100,7 @@ function draw() {
   drawButtonLabel();
   drawHelpBox();
 
-  if (isMobileLayout()) {
+  if (isTouchDevice()) {
     drawClearButton();
   }
 
