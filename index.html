@@ -382,7 +382,22 @@
       .vrun-reference-card { grid-template-columns: 1fr; }
       .profile-card img { height: 300px; }
     }
+@media (max-width: 900px){
 
+    .vrun-credits{
+        grid-template-columns:1fr;
+        gap:32px;
+        padding:34px 24px 48px;
+    }
+
+    .credits-grid{
+        grid-template-columns:1fr;
+    }
+
+    .credit-block.full{
+        grid-column:auto;
+    }
+}
     @media (max-width: 480px) { .vrun-hero-right { height: 460px; min-height: 460px; } }
     @media (max-width: 420px) { .vrun-title { font-size: 3.4rem; } .vrun-hero-right { height: 420px; min-height: 420px; } }
 
@@ -604,7 +619,7 @@ At the University of Waikato, he is recognized for his teaching in Interactive M
         </div>
       </section>
 
-    </section>
+    
      <section class="vrun-credits" id="credits">
 
     <h3>Credits</h3>
