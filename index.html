@@ -268,6 +268,99 @@
       border-radius: 50%; background: rgba(0,0,0,0.65); border: 1px solid rgba(255,255,255,0.14); color: rgba(255,255,255,0.82); text-decoration: none; font-size: 1.2rem; backdrop-filter: blur(12px); transition: 0.35s ease; z-index: 999999; box-shadow: 0 0 32px rgba(120,80,255,0.24); pointer-events: auto;
     }
 
+    .vrun-credits{
+          font-family: "Binjay";
+           
+    display:grid;
+    grid-template-columns:280px 1fr;
+    gap:54px;
+    padding:64px 42px 90px;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+.vrun-credits h3{
+    font-family: "Binjay", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0;
+}
+.credits-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+}
+
+.credit-block{
+    padding:24px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
+    background:rgba(255,255,255,.02);
+}
+
+
+
+.credit-block h4{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.credit-block p,
+.credit-block li{
+   font-family: "Nasalization", monospace;
+    color:rgba(255,255,255,.72);
+    line-height:1.8;
+}
+
+.credit-block ul{
+    margin:12px 0 0 18px;
+    padding:0;
+}
+
+.credit-block.full{
+    grid-column:1 / -1;
+}
+
+.thanks{
+    font-size:.95rem;
+}
+.vrun-reference-card {
+  grid-template-columns: 1.5fr 1fr;
+}
+
+.vrun-reference-site {
+  width: 100%;
+  height: 640px;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: #000;
+  box-shadow: 0 0 60px rgba(120,80,255,.15);
+}
+
+.vrun-reference-site iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.vrun-reference-site{
+    width:100%;
+    aspect-ratio:16/9;
+    overflow:hidden;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.08);
+    background:#000;
+    box-shadow:0 0 60px rgba(120,80,255,.15);
+}
+
+.vrun-reference-site iframe{
+    width:100%;
+    height:100%;
+    border:0;
+}
     @media (max-width: 1100px) {
       .vrun-about, .vrun-media, .vrun-authors { grid-template-columns: 1fr; }
       .vrun-video-grid { grid-template-columns: 1fr; }
@@ -309,6 +402,8 @@
           <a href="#about">About</a>
           <a href="#contributors">Authors</a>
           <a href="#media">Medias</a>
+          <a href="#credits">Credits</a>
+
           <a href="mailto:minica.panchetti@uttop.fr">Contact</a>
         </div>
       </nav>
@@ -326,9 +421,7 @@
           <h1 class="vrun-title">VRun</h1>
 
           <p class="vrun-description">
-            An immersive experimental project exploring rythm,
-            movement, voice and embodied interaction through
-            collective digital environments.
+       A music-driven immersive VR experience exploring the boundaries of order and chaos, reality and virtuality, time and space. Blending evolving digital environments with spectator-controlled mapping, it guides players from rigid algorithmic control toward an emancipating and tangible return to nature.
           </p>
         </div>
   
@@ -340,34 +433,47 @@
 
         <div class="vrun-about-content">
           <p>
-            VRun is a collaborative research-creation project developed between
-            France and New Zealand. The project investigates how rhythm,
-            bodily presence, voice and collective interaction can shape immersive
-            environments and sensitive digital experiences.
+        VRun is a collaborative research-creation project developed across France, New Zealand, and Germany. The project investigates how spatialized audio, narrative progression, and spectator-controlled mapping can shape immersive environments, bridging the gap between algorithmic control and emancipating chaos.
           </p>
+
+     
 
           <div class="vrun-tags">
             <span>XR</span>
-            <span>Embodied Interaction</span>
-            <span>Interactive Media</span>
-            <span>Research-Creation</span>
-            <span>Voice</span>
-            <span>Rhythm</span>
-            <span>Immersive Environments</span>
+            <span>RESEARCH-CREATION</span>
+            <span>INTERACTIVE MEDIA</span>
+            <span>SPATIAL AUDIO</span>
+            <span>SPECTATOR MAPPING</span>
+            <span>IMMERSIVE ENVIRONMENTS</span>
+            <span>SPACE AND TIME (IM)POSSIBILITIES</span>
+            <span>EMBODIED INTERACTION</span>
           </div>
 
+
+
           <div class="vrun-reference-card">
-            <img src="assets/Photos/Emika.jpg" alt="EMIKA promotional visual">
+           
+
+<div class="vrun-reference-site">
+    <iframe
+        src="https://bordos.eu/emika-dome-360/"
+        title="If We Disappear"
+        loading="lazy">
+    </iframe>
+</div>
+
+
 
             <div class="vrun-reference-text">
               <h4>EMIKA</h4>
 
               <p>
-                Emika live on tour. If We Disappear is an immersive acoustic-visual
-                journey crafted by multimedia artist and sound designer Emika.
-                Set against the backdrop of her album Falling In Love With Sadness,
-                this live show is designed for the planetarium, combining voice,
-                piano, hypnotic beats and 360° visuals.
+          VRun is a natural extension of EMIKA's ongoing interest in immersive experiences. 
+          The project draws part of its inspiration (specifically the planetarium sequence)
+           from If We Disappear, an immersive 360-degree audiovisual journey created 
+           by EMIKA and visual artist László Zsolt. Originally designed for planetariums, 
+           it creates a meaningful 'mise en abyme' given the very dome we are currently 
+           submitting VRun to as part of the ART∗VR Festival 2026.
               </p>
 
               <p>
@@ -394,14 +500,20 @@
           <div class="profile-content">
             <h2>Raphaël Marczak</h2>
 
+
+            
             <p class="profile-role">
-              Lecturer in Interactive Media Design at Te Kura Toi School of Arts,
-              The University of Waikato.
+            Lecturer at Te Kura Toi | School of Arts (University of Waikato)
+Media and Creative Technologies Department,
+Te Wānanga o Ngā Kete | Division of Arts, Law, Psychology and Social Sciences
             </p>
 
             <p class="profile-bio">
-              Researcher and designer working on interactive systems,
-              embodied interaction, immersive experiences and experimental digital media.
+         Raphaël's research and creative practice focuses on designing audiovisual immersive media (VR | XR) through novel interaction paradigms. In an era increasingly dominated by AI, his current projects aim to recenter the human body, exploring innovative mechanics such as breath-controlled interactions within virtual spaces.
+   </p> 
+   
+   <p class="profile-bio">
+At the University of Waikato, he is recognized for his teaching in Interactive Media Design, Game Design, and Digital Arts & Cultures. He challenges his students to craft (im)possible spaces and to critically examine how digital media can reconnect with tangible realities (bridging virtuality with physical experiences through visual books, ink-based interactions, and escape games).
             </p>
 
             <div class="profile-links">
@@ -467,7 +579,7 @@
             <h4>Gameplay</h4>
 
             <p>
-              Interactive gameplay and embodied interaction experiments developed for VRUN.
+              Condensed playthrough|Trailer showcasing the interactive mechanics, audiovisual synchronization, spatial navigation, and embodied interactions specifically designed for VRun.
             </p>
           </article>
 
@@ -493,8 +605,129 @@
       </section>
 
     </section>
+     <section class="vrun-credits" id="credits">
+
+    <h3>Credits</h3>
+
+    <div class="credits-grid">
+
+        <div class="credit-block">
+            <h4>VRun</h4>
+            <p>A Virtual Reality experience of <em>Run</em>.</p>
+        </div>
+
+        <div class="credit-block">
+            <h4>Music</h4>
+
+            <p><strong>Written and Produced by</strong><br>
+            Emika</p>
+
+            <p><strong>Additional Production</strong><br>
+            The Exaltics</p>
+
+            <p><strong>Mastering</strong><br>
+            Huejahfink</p>
+
+            <p><strong>Additional Run Loop</strong><br>
+            Huejahfink</p>
+
+            <p><strong>Run Extended Remix</strong><br>
+            Raphaël Marczak</p>
+        </div>
+
+        <div class="credit-block">
+            <h4>Original Concept</h4>
+
+            <p>
+                Raphaël Marczak<br>
+                Minica Panchetti
+            </p>
+        </div>
+
+        <div class="credit-block">
+            <h4>Development</h4>
+
+            <p>
+                <strong>Programming, Level Design,<br>
+                Real-time VFX, Shaders,<br>
+                Audiovisual Synchronisation,<br>
+                Multi-Screens Video Editing</strong><br>
+                Raphaël Marczak
+            </p>
+
+            <p>
+                <strong>3D Modeling,<br>
+                Character Design,<br>
+                Motion Capture,<br>
+                Animation</strong><br>
+                Minica Panchetti
+            </p>
+
+            <p>
+                <strong>Choreography & Dance</strong><br>
+                Aurélie Chabrier
+            </p>
+        </div>
+
+        <div class="credit-block">
+            <h4>3D Assets</h4>
+
+            <p>
+                Models by Minica Panchetti except:
+            </p>
+
+            <ul>
+                <li>Final Sequence ExoRobot — Gaëtan Jestin</li>
+                <li>Ground / Glass Shards — Brackeys</li>
+                <li>From Leaves Cheetah — NestaEric</li>
+                <li>City Circular Neon — Rémi Andrez</li>
+            </ul>
+        </div>
+
+        <div class="credit-block">
+            <h4>Videos</h4>
+
+            <p>
+                Raphaël Marczak
+            </p>
+
+            <p>Using:</p>
+
+            <ul>
+                <li>White Noise & Paint Drops — Videezy.com</li>
+                <li>Stylized Tree — Zii</li>
+            </ul>
+        </div>
+
+        <div class="credit-block full">
+            <h4>Special Thanks</h4>
+
+            <p>
+                All the beta-testers for their valuable feedback:
+            </p>
+
+            <p class="thanks">
+                Alvina, Aurélie, Bevin, Concetta, Eric, Florian,
+                Gaëtan, Giovanna, Jean-Marc, Maëlle, Martine,
+                Michel, Pantxika, Stephane, Simon, Thibaud,
+                Tobias, Vassilia, Yoann, Franck and Patrice Martinez,
+                Julien Buzy-Debat.
+            </p>
+
+            <p>
+                <strong>Tutorial channels</strong><br>
+                Aqsa Nadeem · Binary Lunar · Brackeys · Gabriel Aguiard Prod ·
+                i♥GameDev · Valem
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
   </main>
 
+ 
   <a href="#top" class="back-to-top">↑</a>
 
   
