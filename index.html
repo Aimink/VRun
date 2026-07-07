@@ -9,6 +9,18 @@
   <style>
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+@font-face {
+    font-family: "Binjay";
+    src: url("assets/fonts/Binjay.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Nasalization";
+    src: url("assets/fonts/nasalization-rg.otf") format("opentype");
+}
+
+/* Ensuite seulement le reste de ton CSS */
+
 
     body {
       margin: 0;
@@ -17,10 +29,21 @@
         radial-gradient(circle at bottom right, rgba(70,40,180,0.24), transparent 32%),
         #020304;
       color: #f4f4f4;
-      font-family: "Courier New", monospace;
+   font-family: "Nasalization", "Courier New", monospace;
       overflow-x: hidden;
     }
 
+    .vrun-title {
+    font-family: "Nasalization", sans-serif;
+}
+
+.vrun-section-title,
+.vrun-about h3,
+.vrun-media h3,
+.profile-content h2,
+.vrun-video-card h4 {
+    font-family: "Binjay", sans-serif;
+}
     a { color: inherit; }
 
     .noise {
